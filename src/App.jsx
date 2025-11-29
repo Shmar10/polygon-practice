@@ -6,8 +6,11 @@ import { DiagonalsPage } from './pages/DiagonalsPage';
 import { HelpPage } from './pages/HelpPage';
 
 function App() {
+  // Set basename for GitHub Pages deployment
+  const basename = import.meta.env.BASE_URL || '/';
+  
   return (
-    <Router>
+    <Router basename={basename}>
       <div className="min-h-screen bg-gray-100">
         <Navigation />
         <Routes>
