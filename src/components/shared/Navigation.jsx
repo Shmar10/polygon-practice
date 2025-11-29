@@ -1,9 +1,9 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Shapes, Target } from 'lucide-react';
+import { Home, BookOpen, Target, GraduationCap } from 'lucide-react';
 
 /**
- * Navigation Component - Glassmorphism Design
- * Main navigation bar for the app with frosted glass effect
+ * Navigation Component - Academic Premium Design
+ * Professional academic navigation bar
  */
 export function Navigation() {
   const location = useLocation();
@@ -11,25 +11,25 @@ export function Navigation() {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <nav className="glass-strong mb-8 sticky top-0 z-40 border-b border-white/20">
+    <nav className="bg-gradient-to-r from-blue-600 to-blue-500 border-b-4 border-slate-600 mb-1.5 shadow-lg">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo/Title */}
-          <Link to="/" className="text-xl font-bold text-white hover:text-white/80 transition-colors flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
-              <Shapes className="w-5 h-5" />
+          <Link to="/" className="flex items-center gap-3 text-white hover:text-blue-200 transition-colors">
+            <div className="w-10 h-10 rounded-full bg-slate-600 flex items-center justify-center shadow-lg">
+              <GraduationCap className="w-6 h-6 text-white" />
             </div>
-            Polygon Practice
+            <span className="text-xl font-bold hidden sm:inline">Polygon Practice</span>
           </Link>
 
           {/* Navigation Links */}
           <div className="flex space-x-2">
             <Link
               to="/"
-              className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300 flex items-center gap-2 ${
+              className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-2 ${
                 isActive('/')
-                  ? 'bg-white/30 text-white shadow-lg'
-                  : 'text-white/80 hover:bg-white/20 hover:text-white'
+                  ? 'bg-slate-600 text-white shadow-lg'
+                  : 'text-white hover:bg-blue-700'
               }`}
             >
               <Home className="w-4 h-4" />
@@ -37,21 +37,21 @@ export function Navigation() {
             </Link>
             <Link
               to="/angles"
-              className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300 flex items-center gap-2 ${
+              className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-2 ${
                 isActive('/angles')
-                  ? 'bg-white/30 text-white shadow-lg'
-                  : 'text-white/80 hover:bg-white/20 hover:text-white'
+                  ? 'bg-slate-600 text-white shadow-lg'
+                  : 'text-white hover:bg-blue-700'
               }`}
             >
-              <Shapes className="w-4 h-4" />
+              <BookOpen className="w-4 h-4" />
               <span className="hidden sm:inline">Angles</span>
             </Link>
             <Link
               to="/diagonals"
-              className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300 flex items-center gap-2 ${
+              className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-2 ${
                 isActive('/diagonals')
-                  ? 'bg-white/30 text-white shadow-lg'
-                  : 'text-white/80 hover:bg-white/20 hover:text-white'
+                  ? 'bg-slate-600 text-white shadow-lg'
+                  : 'text-white hover:bg-blue-700'
               }`}
             >
               <Target className="w-4 h-4" />

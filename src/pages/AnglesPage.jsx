@@ -216,107 +216,105 @@ export function AnglesPage() {
   }
 
   return (
-    <div className="min-h-screen py-6 px-4 sm:px-6 lg:px-8">
-      <div className="container mx-auto max-w-7xl">
-        {/* Header */}
-        <div className="text-center mb-8 animate-fade-in">
-          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-2 text-shadow-white">
-            Polygon Angle Practice
-          </h1>
-          <p className="text-white/90 text-lg">
-            Choose your mode: Practice freely or take a 10-question challenge
-          </p>
+    <div className="min-h-screen py-2 px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto max-w-6xl">
+        {/* Header - Academic style for readability */}
+        <div className="text-center mb-1.5 animate-fade-in">
+          <div className="academic-card rounded-lg p-4 max-w-2xl mx-auto border-t-4 border-t-slate-600">
+            <h1 className="text-2xl font-bold text-gray-900 mb-1">
+              Polygon Angle Practice
+            </h1>
+            <p className="text-gray-700 text-sm">
+              Choose your mode: Practice freely or take a 10-question challenge
+            </p>
+          </div>
         </div>
 
-        <div className="glass-card rounded-3xl p-6 sm:p-8 shadow-2xl">
+        <div className="glass-card rounded-3xl p-4 sm:p-5 shadow-2xl">
           {/* Mode Selection Screen */}
           {!sessionActive && !mode && (
             <div className="max-w-5xl mx-auto animate-slide-up">
-              <div className="text-center mb-8">
-                <div className="inline-flex items-center gap-2 glass px-5 py-2 rounded-full mb-4">
-                  <Sparkles className="w-5 h-5 text-indigo-600" />
-                  <span className="font-semibold text-gray-700">Select Your Mode</span>
+              <div className="text-center mb-4">
+                <div className="inline-flex items-center gap-2 glass px-4 py-1.5 rounded-full">
+                  <Sparkles className="w-4 h-4 text-indigo-600" />
+                  <span className="font-semibold text-gray-700 text-sm">Select Your Mode</span>
                 </div>
               </div>
               
-              <div className="grid md:grid-cols-2 gap-6 mb-8">
+              <div className="grid md:grid-cols-2 gap-1 mb-1">
                 {/* Practice Mode Card */}
-                <div className="glass rounded-2xl p-6 hover:scale-105 transition-all duration-300 group cursor-pointer border border-white/30"
+                <div className="academic-card rounded-lg p-4 hover:shadow-lg transition-all duration-300 group cursor-pointer"
                      onClick={() => setMode('practice')}>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center group-hover:rotate-12 transition-transform">
-                        <BookOpen className="w-6 h-6 text-white" />
-                      </div>
-                      <h3 className="text-2xl font-bold text-gray-800">Practice Mode</h3>
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="w-10 h-10 rounded-xl bg-slate-600 flex items-center justify-center group-hover:rotate-12 transition-transform flex-shrink-0">
+                      <BookOpen className="w-5 h-5 text-white" />
                     </div>
+                    <h3 className="text-xl font-bold text-gray-800">Practice Mode</h3>
                   </div>
-                  <p className="text-gray-700 mb-4">
+                  <p className="text-gray-700 text-sm mb-3">
                     Free practice with instant feedback. Perfect for learning and improving your skills.
                   </p>
-                  <ul className="space-y-2 mb-6">
-                    <li className="flex items-center gap-2 text-gray-700">
-                      <CheckCircle className="w-5 h-5 text-emerald-500" />
+                  <ul className="space-y-1.5 mb-4">
+                    <li className="flex items-center gap-2 text-gray-700 text-sm">
+                      <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0" />
                       <span>Practice at your own pace</span>
                     </li>
-                    <li className="flex items-center gap-2 text-gray-700">
-                      <CheckCircle className="w-5 h-5 text-emerald-500" />
+                    <li className="flex items-center gap-2 text-gray-700 text-sm">
+                      <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0" />
                       <span>Choose problem types</span>
                     </li>
-                    <li className="flex items-center gap-2 text-gray-700">
-                      <CheckCircle className="w-5 h-5 text-emerald-500" />
+                    <li className="flex items-center gap-2 text-gray-700 text-sm">
+                      <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0" />
                       <span>See solutions immediately</span>
                     </li>
-                    <li className="flex items-center gap-2 text-gray-700">
-                      <CheckCircle className="w-5 h-5 text-emerald-500" />
+                    <li className="flex items-center gap-2 text-gray-700 text-sm">
+                      <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0" />
                       <span>No time limits or pressure</span>
                     </li>
                   </ul>
-                  <div className="glass-strong p-4 rounded-xl text-center group-hover:bg-white/30 transition-colors">
-                    <span className="font-bold text-indigo-900">Start Practice Mode</span>
+                  <div className="glass-strong p-3 rounded-xl text-center group-hover:bg-white/30 transition-colors">
+                    <span className="font-bold text-black text-sm">Start Practice Mode</span>
                   </div>
                 </div>
 
                 {/* Challenge Mode Card */}
-                <div className="glass rounded-2xl p-6 hover:scale-105 transition-all duration-300 group cursor-pointer border border-white/30"
+                <div className="academic-card rounded-lg p-4 hover:shadow-lg transition-all duration-300 group cursor-pointer"
                      onClick={() => setMode('challenge')}>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center group-hover:rotate-12 transition-transform">
-                        <Trophy className="w-6 h-6 text-white" />
-                      </div>
-                      <h3 className="text-2xl font-bold text-gray-800">Challenge Mode</h3>
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="w-10 h-10 rounded-xl bg-slate-600 flex items-center justify-center group-hover:rotate-12 transition-transform flex-shrink-0">
+                      <Trophy className="w-5 h-5 text-white" />
                     </div>
+                    <h3 className="text-xl font-bold text-gray-800">Challenge Mode</h3>
                   </div>
-                  <p className="text-gray-700 mb-4">
+                  <p className="text-gray-700 text-sm mb-3">
                     Test your knowledge with 10 questions. Your score will be submitted automatically.
                   </p>
-                  <ul className="space-y-2 mb-6">
-                    <li className="flex items-center gap-2 text-gray-700">
-                      <Zap className="w-5 h-5 text-purple-500" />
+                  <ul className="space-y-1.5 mb-4">
+                    <li className="flex items-center gap-2 text-gray-700 text-sm">
+                      <Zap className="w-4 h-4 text-purple-500 flex-shrink-0" />
                       <span>Exactly 10 questions</span>
                     </li>
-                    <li className="flex items-center gap-2 text-gray-700">
-                      <Zap className="w-5 h-5 text-purple-500" />
+                    <li className="flex items-center gap-2 text-gray-700 text-sm">
+                      <Zap className="w-4 h-4 text-purple-500 flex-shrink-0" />
                       <span>Automatic score submission</span>
                     </li>
-                    <li className="flex items-center gap-2 text-gray-700">
-                      <Zap className="w-5 h-5 text-purple-500" />
+                    <li className="flex items-center gap-2 text-gray-700 text-sm">
+                      <Zap className="w-4 h-4 text-purple-500 flex-shrink-0" />
                       <span>Track your progress</span>
                     </li>
-                    <li className="flex items-center gap-2 text-gray-700">
-                      <Zap className="w-5 h-5 text-purple-500" />
+                    <li className="flex items-center gap-2 text-gray-700 text-sm">
+                      <Zap className="w-4 h-4 text-purple-500 flex-shrink-0" />
                       <span>Requires name & class period</span>
                     </li>
                   </ul>
-                  <div className="glass-strong p-4 rounded-xl text-center group-hover:bg-white/30 transition-colors">
-                    <span className="font-bold text-purple-900">Start Challenge Mode</span>
+                  <div className="glass-strong p-3 rounded-xl text-center group-hover:bg-white/30 transition-colors">
+                    <span className="font-bold text-black text-sm">Start Challenge Mode</span>
                   </div>
                 </div>
               </div>
 
               {/* Problem Type Selector */}
-              <div className="glass rounded-2xl p-6 border border-white/30">
+              <div className="academic-card rounded-lg p-4">
                 <ProblemTypeSelector
                   problemTypes={angleProblemTypes}
                   selectedTypes={selectedProblemTypes}
