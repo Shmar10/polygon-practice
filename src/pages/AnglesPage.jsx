@@ -512,13 +512,11 @@ export function AnglesPage() {
               </div>
 
               {/* Solution Modal */}
-              {showSolution && currentProblem && (
-                <SolutionModal
-                  problem={currentProblem}
-                  userAnswer={parseFloat(userAnswer)}
-                  onContinue={handleContinue}
-                />
-              )}
+              <SolutionModal
+                isOpen={showSolution && currentProblem}
+                solution={currentProblem?.solution || ''}
+                onContinue={handleContinue}
+              />
             </div>
           )}
         </div>
