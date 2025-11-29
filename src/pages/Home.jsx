@@ -1,11 +1,15 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { BookOpen, Trophy, TrendingUp, Lightbulb, GraduationCap, Award, CheckCircle } from 'lucide-react';
+import { BookOpen, Trophy, TrendingUp, Lightbulb, GraduationCap, Award, CheckCircle, BookMarked } from 'lucide-react';
+import { FormulaModal } from '../components/shared/FormulaModal';
 
 /**
  * Home Page - Academic Premium Design
  * Classic, professional academic aesthetic
  */
 export function Home() {
+  const [isFormulaModalOpen, setIsFormulaModalOpen] = useState(false);
+
   return (
     <div className="min-h-screen py-2 px-4 sm:px-6 lg:px-8 relative">
       <div className="max-w-6xl mx-auto relative z-10">
@@ -18,6 +22,13 @@ export function Home() {
             <p className="text-base text-gray-600">
               A comprehensive learning platform for geometry students
             </p>
+            <button
+              onClick={() => setIsFormulaModalOpen(true)}
+              className="mt-4 inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white px-6 py-2.5 rounded-lg font-semibold hover:from-blue-700 hover:to-blue-600 transition-all shadow-md hover:shadow-lg"
+            >
+              <BookMarked className="w-5 h-5" />
+              Quick Formula Reference
+            </button>
           </div>
         </div>
 
@@ -80,7 +91,7 @@ export function Home() {
           >
             <div className="academic-card rounded-lg overflow-hidden hover:shadow-xl transition-all duration-300 h-full">
               {/* Header */}
-              <div className="academic-accent p-6">
+              <div className="academic-header p-6">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 rounded-lg bg-slate-600 flex items-center justify-center shadow-lg">
                     <Trophy className="w-6 h-6 text-white" />
@@ -93,7 +104,7 @@ export function Home() {
               
               {/* Content */}
               <div className="p-6 bg-white">
-                <p className="text-gray-700 text-sm mb-4 leading-relaxed border-l-4 border-purple-500 pl-3">
+                <p className="text-gray-700 text-sm mb-4 leading-relaxed border-l-4 border-blue-500 pl-3">
                   Learn about polygon diagonals, including total diagonals and diagonals from a vertex.
                 </p>
                 <ul className="space-y-2 mb-5">
@@ -115,7 +126,7 @@ export function Home() {
                   </li>
                 </ul>
                 <div className="border-t-2 border-gray-200 pt-4">
-                  <div className="bg-gradient-to-r from-purple-600 to-purple-500 text-white py-3 px-4 rounded-lg text-center font-semibold group-hover:from-purple-700 group-hover:to-purple-600 transition-all shadow-md hover:shadow-lg">
+                  <div className="bg-gradient-to-r from-blue-600 to-blue-500 text-white py-3 px-4 rounded-lg text-center font-semibold group-hover:from-blue-700 group-hover:to-blue-600 transition-all shadow-md hover:shadow-lg">
                     Begin Diagonal Practice →
                   </div>
                 </div>
@@ -141,7 +152,7 @@ export function Home() {
               </p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-slate-600 to-slate-500 flex items-center justify-center shadow-lg">
+              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-blue-600 to-blue-500 flex items-center justify-center shadow-lg">
                 <Lightbulb className="w-8 h-8 text-white" />
               </div>
               <h4 className="font-bold text-gray-900 mb-2">Step-by-Step Solutions</h4>
@@ -150,7 +161,7 @@ export function Home() {
               </p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-slate-600 to-slate-500 flex items-center justify-center shadow-lg">
+              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-blue-600 to-blue-500 flex items-center justify-center shadow-lg">
                 <Award className="w-8 h-8 text-white" />
               </div>
               <h4 className="font-bold text-gray-900 mb-2">Challenge Mode</h4>
@@ -161,6 +172,13 @@ export function Home() {
           </div>
         </div>
       </div>
+
+      {/* Formula Modal */}
+      <FormulaModal 
+        isOpen={isFormulaModalOpen} 
+        onClose={() => setIsFormulaModalOpen(false)} 
+        type="all"
+      />
     </div>
   );
 }

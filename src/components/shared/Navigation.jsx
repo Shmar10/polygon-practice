@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Home, BookOpen, Target, GraduationCap } from 'lucide-react';
+import { Home, BookOpen, Target, GraduationCap, HelpCircle } from 'lucide-react';
 
 /**
  * Navigation Component - Academic Premium Design
@@ -56,6 +56,17 @@ export function Navigation() {
             >
               <Target className="w-4 h-4" />
               <span className="hidden sm:inline">Diagonals</span>
+            </Link>
+            <Link
+              to="/help"
+              className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-2 ${
+                isActive('/help')
+                  ? 'bg-slate-600 text-white shadow-lg'
+                  : 'text-white hover:bg-blue-700'
+              }`}
+            >
+              <HelpCircle className="w-4 h-4" />
+              <span className="hidden sm:inline">Help</span>
             </Link>
           </div>
         </div>

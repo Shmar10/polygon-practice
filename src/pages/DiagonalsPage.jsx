@@ -1,15 +1,20 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { ScoreBoard } from '../components/shared/ScoreBoard';
 import { ScoreCard } from '../components/shared/ScoreCard';
 import { ProblemTypeSelector } from '../components/shared/ProblemTypeSelector';
+import { FormulaModal } from '../components/shared/FormulaModal';
+import { HintDisplay } from '../components/shared/HintDisplay';
 import { useScore } from '../hooks/useScore';
 import { generateDiagonalProblem, diagonalProblemTypes } from '../utils/diagonalProblems';
 import { submitScore } from '../utils/googleSheets';
-import { BookOpen, Trophy, CheckCircle, Zap, ArrowLeft, Target, Sparkles } from 'lucide-react';
+import { BookOpen, Trophy, CheckCircle, Zap, ArrowLeft, Target, Sparkles, BookMarked, Lightbulb } from 'lucide-react';
 
 const CHALLENGE_LENGTH = 10;
 
 export function DiagonalsPage() {
+  const location = useLocation();
+  
   const {
     correctCount,
     incorrectCount,
@@ -29,6 +34,8 @@ export function DiagonalsPage() {
   const [feedbackType, setFeedbackType] = useState('');
   const [showSolution, setShowSolution] = useState(false);
   const [showScoreCard, setShowScoreCard] = useState(false);
+  const [isFormulaModalOpen, setIsFormulaModalOpen] = useState(false);
+  const [currentHintIndex, setCurrentHintIndex] = useState(-1);
   
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -42,6 +49,13 @@ export function DiagonalsPage() {
   const [lastProblemType, setLastProblemType] = useState(null);
   const [lastAnswerWasIncorrect, setLastAnswerWasIncorrect] = useState(false);
 
+  // Reset to mode selection when navigating to this page
+  useEffect(() => {
+    setMode(null);
+    setSessionActive(false);
+    setShowScoreCard(false);
+  }, [location]); // Reset whenever the route location changes
+
   const repopulateProblemTypes = () => {
     const types = selectedProblemTypes.length > 0 ? selectedProblemTypes : [diagonalProblemTypes[0].id];
     setAvailableProblemTypes([...types]);
@@ -54,6 +68,7 @@ export function DiagonalsPage() {
     setFeedbackType('');
     setUserAnswer('');
     setShowSolution(false);
+    setCurrentHintIndex(-1);
 
     let problemType;
 
@@ -274,9 +289,16 @@ export function DiagonalsPage() {
             <h1 className="text-2xl font-bold text-gray-900 mb-1">
               Polygon Diagonal Practice
             </h1>
-            <p className="text-gray-700 text-sm">
+            <p className="text-gray-700 text-sm mb-3">
               Choose your mode: Practice freely or take a 10-question challenge
             </p>
+            <button
+              onClick={() => setIsFormulaModalOpen(true)}
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:from-blue-700 hover:to-blue-600 transition-all shadow-md hover:shadow-lg"
+            >
+              <BookMarked className="w-4 h-4" />
+              Quick Formulas
+            </button>
           </div>
         </div>
 
@@ -451,31 +473,22 @@ export function DiagonalsPage() {
 
           {/* Active Session */}
           {sessionActive && currentProblem && (
-            <div className="max-w-3xl mx-auto">
-              {/* Progress Header */}
-              <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
-                {mode === 'challenge' && (
-                  <div className="glass px-6 py-3 rounded-2xl border border-white/30">
-                    <span className="text-sm text-gray-700 font-medium">
-                      Question {challengeQuestionCount + 1} of {CHALLENGE_LENGTH}
-                    </span>
-                  </div>
-                )}
-                <ScoreBoard correct={correctCount} incorrect={incorrectCount} />
-                <button
-                  onClick={() => endSession(false)}
-                  className="glass px-6 py-3 rounded-2xl text-gray-700 font-semibold hover:bg-white/30 transition-colors border border-white/30"
-                >
-                  End Session
-                </button>
-              </div>
-
-              {/* Problem Card */}
-              <div className="glass-strong rounded-3xl p-8 mb-6 border border-white/30">
-                <div className="text-center mb-8">
-                  <span className="inline-block glass px-4 py-2 rounded-full text-sm font-medium text-gray-700 mb-4 border border-white/30">
-                    {currentProblem.type}
+            <div className="max-w-6xl mx-auto">
+              {/* Challenge Question Counter (if applicable) */}
+              {mode === 'challenge' && (
+                <div className="glass px-6 py-3 rounded-2xl border border-white/30 mb-6 text-center max-w-xs mx-auto">
+                  <span className="text-sm text-gray-700 font-medium">
+                    Question {challengeQuestionCount + 1} of {CHALLENGE_LENGTH}
                   </span>
+                </div>
+              )}
+
+              {/* Two-column layout: Problem on left, Controls on right */}
+              <div className="grid md:grid-cols-3 gap-6">
+                {/* Problem Card - Takes 2 columns */}
+                <div className="md:col-span-2">
+                  <div className="glass-strong rounded-3xl px-8 pt-6 pb-8 border border-white/30">
+                <div className="mb-8">
                   <h3 className="text-2xl font-bold text-gray-900">
                     {currentProblem.question}
                   </h3>
@@ -494,26 +507,28 @@ export function DiagonalsPage() {
                     />
                   </div>
 
-                  <div className="flex gap-3">
-                    {!showSolution && (
-                      <>
-                        <button
-                          type="submit"
-                          className="flex-1 py-4 px-6 rounded-2xl font-bold text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 transition-all duration-300 shadow-lg hover:shadow-2xl transform hover:scale-105"
-                        >
-                          Submit Answer
-                        </button>
-                        {mode === 'practice' && (
+                  <div className="space-y-3">
+                    <div className="flex gap-3">
+                      {!showSolution && (
+                        <>
                           <button
-                            type="button"
-                            onClick={handleShowAnswer}
-                            className="px-6 py-4 rounded-2xl font-semibold text-gray-700 glass hover:bg-white/30 transition-colors border border-white/30"
+                            type="submit"
+                            className="flex-1 py-4 px-6 rounded-2xl font-bold text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 transition-all duration-300 shadow-lg hover:shadow-2xl transform hover:scale-105"
                           >
-                            Show Answer
+                            Submit Answer
                           </button>
-                        )}
-                      </>
-                    )}
+                          {mode === 'practice' && (
+                            <button
+                              type="button"
+                              onClick={handleShowAnswer}
+                              className="px-6 py-4 rounded-2xl font-semibold text-gray-700 glass hover:bg-white/30 transition-colors border border-white/30"
+                            >
+                              Show Answer
+                            </button>
+                          )}
+                        </>
+                      )}
+                    </div>
                     {showSolution && (
                       <button
                         type="button"
@@ -534,6 +549,15 @@ export function DiagonalsPage() {
                       {feedback}
                     </div>
                   )}
+
+                  {/* Hints Display */}
+                  {mode === 'practice' && currentProblem?.hints && (
+                    <HintDisplay
+                      hints={currentProblem.hints}
+                      currentHintIndex={currentHintIndex}
+                      onShowNextHint={() => setCurrentHintIndex(prev => Math.min(prev + 1, currentProblem.hints.length - 1))}
+                    />
+                  )}
                 </form>
 
                 {showSolution && currentProblem && (
@@ -550,11 +574,41 @@ export function DiagonalsPage() {
                     </div>
                   </div>
                 )}
+                  </div>
+                </div>
+
+                {/* Right Sidebar - Controls */}
+                <div className="space-y-4">
+                  <ScoreBoard correct={correctCount} incorrect={incorrectCount} />
+                  <button
+                    onClick={() => endSession(false)}
+                    className="w-full glass px-6 py-3 rounded-2xl text-gray-700 font-semibold hover:bg-white/30 transition-colors border border-white/30"
+                  >
+                    End Session
+                  </button>
+                  {mode === 'practice' && currentProblem?.hints && !showSolution && (
+                    <button
+                      type="button"
+                      onClick={() => setCurrentHintIndex(prev => Math.min(prev + 1, currentProblem.hints.length - 1))}
+                      className="w-full py-3 px-6 rounded-2xl font-semibold text-yellow-700 bg-yellow-50 hover:bg-yellow-100 border-2 border-yellow-300 transition-all duration-300 flex items-center justify-center gap-2"
+                    >
+                      <Lightbulb className="w-5 h-5" />
+                      {currentHintIndex < 0 ? 'Show Hint' : 'Show Next Hint'}
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           )}
         </div>
       </div>
+
+      {/* Formula Modal */}
+      <FormulaModal 
+        isOpen={isFormulaModalOpen} 
+        onClose={() => setIsFormulaModalOpen(false)} 
+        type="diagonals"
+      />
     </div>
   );
 }

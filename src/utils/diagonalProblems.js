@@ -18,7 +18,7 @@ export const diagonalProblemTypes = [
  */
 export function generateDiagonalProblem(problemType) {
   let n, D, sum, intAngle, extAngle, dVertex;
-  let question, answer, solution;
+  let question, answer, solution, hints;
 
   switch (problemType) {
     case 'n_to_d':
@@ -30,6 +30,11 @@ D = ${n}(${n} - 3) / 2
 D = ${n}(${n - 3}) / 2
 D = ${n * (n - 3)} / 2
 D = ${answer}`;
+      hints = [
+        `Use the diagonal formula: d = n(n - 3) ÷ 2`,
+        `Substitute n = ${n} into the formula`,
+        `Calculate: ${n}(${n} - 3) ÷ 2 = ${n}(${n - 3}) ÷ 2`
+      ];
       break;
 
     case 'sum_to_d':
@@ -50,6 +55,11 @@ Formula: D = n(n - 3) / 2
 D = ${n}(${n} - 3) / 2
 D = ${n}(${n - 3}) / 2
 D = ${answer}`;
+      hints = [
+        `This is a two-step problem. First find the number of sides (n)`,
+        `Use: ${sum} = (n - 2) × 180 to solve for n. You get n = ${n}`,
+        `Now use the diagonal formula: d = ${n}(${n} - 3) ÷ 2`
+      ];
       break;
 
     case 'int_to_d':
@@ -76,6 +86,11 @@ Step 2: Find the number of diagonals (D).
 Formula: D = n(n - 3) / 2
 D = ${n}(${n} - 3) / 2
 D = ${answer}`;
+      hints = [
+        `First, find the number of sides. Use exterior angle: 180° - ${intAngle}° = ${180 - intAngle}°`,
+        `Then find sides: n = 360° ÷ ${180 - intAngle}° = ${n}`,
+        `Finally, find diagonals: d = ${n}(${n} - 3) ÷ 2`
+      ];
       break;
 
     case 'ext_to_d':
@@ -92,6 +107,11 @@ Step 2: Find the number of diagonals (D).
 Formula: D = n(n - 3) / 2
 D = ${n}(${n} - 3) / 2
 D = ${answer}`;
+      hints = [
+        `First, find the number of sides using n = 360° ÷ exterior angle`,
+        `Calculate: n = 360° ÷ ${extAngle}° = ${n}`,
+        `Now find diagonals: d = ${n}(${n} - 3) ÷ 2`
+      ];
       break;
 
     case 'd_to_n':
@@ -117,6 +137,11 @@ Since sides (n) must be positive, we take the '+' root:
 n = ( 3 + ${Math.sqrt(9 + (4 * D * 2))} ) / 2
 n = ${(3 + Math.sqrt(9 + (4 * D * 2))) / 2}
 n = ${answer}`;
+      hints = [
+        `Start with d = n(n - 3) ÷ 2 and substitute d = ${D}`,
+        `Multiply both sides by 2: ${D * 2} = n² - 3n`,
+        `Rearrange to n² - 3n - ${D * 2} = 0 and use the quadratic formula (or guess-and-check!)`
+      ];
       break;
 
     case 'd_vertex_to_n':
@@ -131,6 +156,11 @@ ${dVertex} = n - 3
 Step 2: Solve for n.
 n = ${dVertex} + 3
 n = ${answer}`;
+      hints = [
+        `Use the formula: diagonals from one vertex = n - 3`,
+        `Substitute: ${dVertex} = n - 3`,
+        `Solve for n by adding 3 to both sides`
+      ];
       break;
 
     case 'd_vertex_to_d':
@@ -149,12 +179,17 @@ Formula: D = n(n - 3) / 2
 D = ${n}(${n} - 3) / 2
 D = ${n}(${n - 3}) / 2
 D = ${answer}`;
+      hints = [
+        `First, find the number of sides: ${dVertex} = n - 3, so n = ${n}`,
+        `Now you need to find TOTAL diagonals (not just from one vertex)`,
+        `Use the formula: d = ${n}(${n} - 3) ÷ 2`
+      ];
       break;
 
     default:
       throw new Error(`Unknown problem type: ${problemType}`);
   }
 
-  return { type: problemType, question, answer, solution };
+  return { type: problemType, question, answer, solution, hints };
 }
 

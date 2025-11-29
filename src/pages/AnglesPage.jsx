@@ -1,17 +1,22 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { ScoreBoard } from '../components/shared/ScoreBoard';
 import { SolutionModal } from '../components/shared/SolutionModal';
+import { FormulaModal } from '../components/shared/FormulaModal';
+import { HintDisplay } from '../components/shared/HintDisplay';
 import { ProblemTypeSelector } from '../components/shared/ProblemTypeSelector';
 import { ScoreCard } from '../components/shared/ScoreCard';
 import { useScore } from '../hooks/useScore';
 import { generateAngleProblem, angleProblemTypes } from '../utils/angleProblems';
 import { shuffle } from '../utils/polygonHelpers';
 import { submitScore } from '../utils/googleSheets';
-import { BookOpen, Trophy, CheckCircle, Zap, ArrowLeft, Sparkles } from 'lucide-react';
+import { BookOpen, Trophy, CheckCircle, Zap, ArrowLeft, Sparkles, BookMarked, Lightbulb } from 'lucide-react';
 
 const CHALLENGE_LENGTH = 10;
 
 export function AnglesPage() {
+  const location = useLocation();
+  
   const {
     correctCount,
     incorrectCount,
@@ -31,6 +36,8 @@ export function AnglesPage() {
   const [feedbackType, setFeedbackType] = useState('');
   const [showSolution, setShowSolution] = useState(false);
   const [showScoreCard, setShowScoreCard] = useState(false);
+  const [isFormulaModalOpen, setIsFormulaModalOpen] = useState(false);
+  const [currentHintIndex, setCurrentHintIndex] = useState(-1);
   
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -41,6 +48,13 @@ export function AnglesPage() {
   
   const [challengeQuestionCount, setChallengeQuestionCount] = useState(0);
   const [problemQueue, setProblemQueue] = useState([]);
+
+  // Reset to mode selection when navigating to this page
+  useEffect(() => {
+    setMode(null);
+    setSessionActive(false);
+    setShowScoreCard(false);
+  }, [location]); // Reset whenever the route location changes
 
   const resetProblemQueue = () => {
     if (problemQueue.length === 0) {
@@ -56,6 +70,7 @@ export function AnglesPage() {
     setFeedbackType('');
     setUserAnswer('');
     setShowSolution(false);
+    setCurrentHintIndex(-1);
 
     resetProblemQueue();
     
@@ -224,9 +239,16 @@ export function AnglesPage() {
             <h1 className="text-2xl font-bold text-gray-900 mb-1">
               Polygon Angle Practice
             </h1>
-            <p className="text-gray-700 text-sm">
+            <p className="text-gray-700 text-sm mb-3">
               Choose your mode: Practice freely or take a 10-question challenge
             </p>
+            <button
+              onClick={() => setIsFormulaModalOpen(true)}
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:from-blue-700 hover:to-blue-600 transition-all shadow-md hover:shadow-lg"
+            >
+              <BookMarked className="w-4 h-4" />
+              Quick Formulas
+            </button>
           </div>
         </div>
 
@@ -401,31 +423,22 @@ export function AnglesPage() {
 
           {/* Active Session */}
           {sessionActive && currentProblem && (
-            <div className="max-w-3xl mx-auto">
-              {/* Progress Header */}
-              <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
-                {mode === 'challenge' && (
-                  <div className="glass px-6 py-3 rounded-2xl border border-white/30">
-                    <span className="text-sm text-gray-700 font-medium">
-                      Question {challengeQuestionCount + 1} of {CHALLENGE_LENGTH}
-                    </span>
-                  </div>
-                )}
-                <ScoreBoard correct={correctCount} incorrect={incorrectCount} />
-                <button
-                  onClick={() => endSession(false)}
-                  className="glass px-6 py-3 rounded-2xl text-gray-700 font-semibold hover:bg-white/30 transition-colors border border-white/30"
-                >
-                  End Session
-                </button>
-              </div>
-
-              {/* Problem Card */}
-              <div className="glass-strong rounded-3xl p-8 mb-6 border border-white/30">
-                <div className="text-center mb-8">
-                  <span className="inline-block glass px-4 py-2 rounded-full text-sm font-medium text-gray-700 mb-4 border border-white/30">
-                    {currentProblem.type}
+            <div className="max-w-6xl mx-auto">
+              {/* Challenge Question Counter (if applicable) */}
+              {mode === 'challenge' && (
+                <div className="glass px-6 py-3 rounded-2xl border border-white/30 mb-6 text-center max-w-xs mx-auto">
+                  <span className="text-sm text-gray-700 font-medium">
+                    Question {challengeQuestionCount + 1} of {CHALLENGE_LENGTH}
                   </span>
+                </div>
+              )}
+
+              {/* Two-column layout: Problem on left, Controls on right */}
+              <div className="grid md:grid-cols-3 gap-6">
+                {/* Problem Card - Takes 2 columns */}
+                <div className="md:col-span-2">
+                  <div className="glass-strong rounded-3xl px-8 pt-6 pb-8 border border-white/30">
+                <div className="mb-8">
                   <h3 className="text-2xl font-bold text-gray-900">
                     {currentProblem.question}
                   </h3>
@@ -463,7 +476,39 @@ export function AnglesPage() {
                       {feedback}
                     </div>
                   )}
+
+                  {/* Hints Display */}
+                  {mode === 'practice' && currentProblem?.hints && (
+                    <HintDisplay
+                      hints={currentProblem.hints}
+                      currentHintIndex={currentHintIndex}
+                      onShowNextHint={() => setCurrentHintIndex(prev => Math.min(prev + 1, currentProblem.hints.length - 1))}
+                    />
+                  )}
                 </form>
+                  </div>
+                </div>
+
+                {/* Right Sidebar - Controls */}
+                <div className="space-y-4">
+                  <ScoreBoard correct={correctCount} incorrect={incorrectCount} />
+                  <button
+                    onClick={() => endSession(false)}
+                    className="w-full glass px-6 py-3 rounded-2xl text-gray-700 font-semibold hover:bg-white/30 transition-colors border border-white/30"
+                  >
+                    End Session
+                  </button>
+                  {mode === 'practice' && currentProblem?.hints && !showSolution && (
+                    <button
+                      type="button"
+                      onClick={() => setCurrentHintIndex(prev => Math.min(prev + 1, currentProblem.hints.length - 1))}
+                      className="w-full py-3 px-6 rounded-2xl font-semibold text-yellow-700 bg-yellow-50 hover:bg-yellow-100 border-2 border-yellow-300 transition-all duration-300 flex items-center justify-center gap-2"
+                    >
+                      <Lightbulb className="w-5 h-5" />
+                      {currentHintIndex < 0 ? 'Show Hint' : 'Show Next Hint'}
+                    </button>
+                  )}
+                </div>
               </div>
 
               {/* Solution Modal */}
@@ -478,6 +523,13 @@ export function AnglesPage() {
           )}
         </div>
       </div>
+
+      {/* Formula Modal */}
+      <FormulaModal 
+        isOpen={isFormulaModalOpen} 
+        onClose={() => setIsFormulaModalOpen(false)} 
+        type="angles"
+      />
     </div>
   );
 }

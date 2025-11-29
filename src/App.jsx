@@ -3,6 +3,7 @@ import { Navigation } from './components/shared/Navigation';
 import { Home } from './pages/Home';
 import { AnglesPage } from './pages/AnglesPage';
 import { DiagonalsPage } from './pages/DiagonalsPage';
+import { HelpPage } from './pages/HelpPage';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/angles" element={<AnglesPage />} />
           <Route path="/diagonals" element={<DiagonalsPage />} />
+          <Route path="/help" element={<HelpPage />} />
         </Routes>
       </div>
     </Router>

@@ -19,7 +19,7 @@ export const angleProblemTypes = [
  * Generates a problem based on the problem type
  */
 export function generateAngleProblem(problemType) {
-  let n, name, question, answer, solution;
+  let n, name, question, answer, solution, hints;
   const decimals = 2;
 
   switch (problemType) {
@@ -32,6 +32,11 @@ export function generateAngleProblem(problemType) {
       solution = `The formula for the sum of interior angles is <strong>(n - 2) * 180</strong>, where 'n' is the number of sides.<br>
                   For a ${name} (n = ${n}):<br>
                   (${n} - 2) * 180 = ${n - 2} * 180 = <strong>${answer}°</strong>`;
+      hints = [
+        `Use the formula: Sum of Interior Angles = (n - 2) × 180°`,
+        `You have ${n} sides, so substitute n = ${n} into the formula`,
+        `Calculate: (${n} - 2) × 180 = ${n - 2} × 180`
+      ];
       break;
     }
 
@@ -46,6 +51,11 @@ export function generateAngleProblem(problemType) {
                   (${n} - 2) * 180 = ${sum}°<br>
                   For a regular polygon, divide the sum by the number of sides, 'n'.<br>
                   ${sum}° / ${n} = <strong>${answer}°</strong>`;
+      hints = [
+        `First, find the sum of ALL interior angles using (n - 2) × 180°`,
+        `The sum is ${sum}°. For a REGULAR polygon, all angles are equal`,
+        `Divide the sum by the number of sides: ${sum}° ÷ ${n}`
+      ];
       break;
     }
 
@@ -59,6 +69,11 @@ export function generateAngleProblem(problemType) {
                   180° - ${interiorAngle}° = ${exteriorAngle}°<br>
                   The sum of exterior angles is always 360°. The number of sides 'n' is 360° / Exterior Angle.<br>
                   360° / ${exteriorAngle}° = <strong>${answer} sides</strong>`;
+      hints = [
+        `Interior and exterior angles are supplementary (they add to 180°)`,
+        `Find the exterior angle: 180° - ${interiorAngle}° = ${exteriorAngle}°`,
+        `Use the formula: n = 360° ÷ exterior angle`
+      ];
       break;
     }
 
@@ -73,6 +88,11 @@ export function generateAngleProblem(problemType) {
                   ${sum / 180} = n - 2<br>
                   n = ${sum / 180} + 2<br>
                   n = <strong>${answer} sides</strong>`;
+      hints = [
+        `Start with the formula: Sum = (n - 2) × 180°`,
+        `Substitute the sum: ${sum} = (n - 2) × 180. Now solve for n`,
+        `Divide both sides by 180, then add 2 to get n`
+      ];
       break;
     }
 
@@ -82,6 +102,11 @@ export function generateAngleProblem(problemType) {
       question = `What is the sum of the exterior angles of a ${name} (a polygon with ${n} sides)?`;
       answer = 360;
       solution = `The sum of the exterior angles of *any* convex polygon is <strong>360°</strong>, regardless of the number of sides.`;
+      hints = [
+        `This is a special rule that applies to ALL polygons`,
+        `The sum of exterior angles is ALWAYS the same, no matter how many sides`,
+        `The answer is 360° for any polygon!`
+      ];
       break;
     }
 
@@ -93,6 +118,11 @@ export function generateAngleProblem(problemType) {
       answer = exteriorAngle;
       solution = `The sum of exterior angles is 360°. For a regular polygon with 'n' sides, divide 360 by 'n'.<br>
                   360° / ${n} = <strong>${answer}°</strong>`;
+      hints = [
+        `The sum of ALL exterior angles is always 360°`,
+        `For a REGULAR polygon, all exterior angles are equal`,
+        `Divide 360° by the number of sides: 360° ÷ ${n}`
+      ];
       break;
     }
 
@@ -103,6 +133,11 @@ export function generateAngleProblem(problemType) {
       answer = n;
       solution = `The sum of exterior angles is 360°. The number of sides 'n' is 360° / Exterior Angle.<br>
                   360° / ${exteriorAngle}° = <strong>${answer} sides</strong>`;
+      hints = [
+        `Remember: the sum of exterior angles is always 360°`,
+        `For a regular polygon: each exterior angle = 360° ÷ n`,
+        `Rearrange to solve for n: n = 360° ÷ ${exteriorAngle}°`
+      ];
       break;
     }
 
@@ -132,6 +167,11 @@ export function generateAngleProblem(problemType) {
                   Set up the equation: ${runningSum} + x = ${sum}<br>
                   x = ${sum} - ${runningSum}<br>
                   x = <strong>${answer}°</strong>`;
+      hints = [
+        `First, find the total sum of interior angles using (n - 2) × 180°`,
+        `The sum is ${sum}°. Now add up all the known angles`,
+        `Subtract the sum of known angles from ${sum}° to find x`
+      ];
       break;
     }
 
@@ -179,6 +219,11 @@ export function generateAngleProblem(problemType) {
                   ${coeffSum}x = ${sum - constSum}<br>
                   x = ${sum - constSum} / ${coeffSum}<br>
                   x = <strong>${answer}</strong>`;
+      hints = [
+        `Find the sum of interior angles: (${n} - 2) × 180 = ${sum}°`,
+        `Set all expressions equal to ${sum}°, then combine like terms (add all x's together, add all constants together)`,
+        `You'll get ${coeffSum}x + ${constSum} = ${sum}. Solve for x`
+      ];
       break;
     }
 
@@ -186,6 +231,6 @@ export function generateAngleProblem(problemType) {
       throw new Error(`Unknown problem type: ${problemType}`);
   }
 
-  return { type: problemType, question, answer, solution };
+  return { type: problemType, question, answer, solution, hints };
 }
 
