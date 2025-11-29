@@ -1,87 +1,91 @@
 import { Link } from 'react-router-dom';
-import { BookOpen, Trophy, TrendingUp, Lightbulb, Target, Shapes, Sparkles } from 'lucide-react';
+import { BookOpen, Trophy, TrendingUp, Lightbulb, Target, Shapes, Sparkles, ArrowRight } from 'lucide-react';
 
 /**
- * Home Page
- * Landing page with links to practice modes
+ * Home Page - Glassmorphism Design
+ * Modern frosted glass aesthetic with vibrant gradients
  */
 export function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 py-6 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-blue-400 rounded-full filter blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-400 rounded-full filter blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-      </div>
-
-      <div className="max-w-5xl mx-auto relative z-10">
-        <div className="text-center mb-6">
-          <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-6 py-3 rounded-full shadow-soft mb-4">
-            <Sparkles className="w-5 h-5 text-primary-600" />
-            <span className="font-semibold text-primary-600">Interactive Learning Platform</span>
+    <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8 relative">
+      <div className="max-w-6xl mx-auto relative z-10">
+        {/* Header with glass badge */}
+        <div className="text-center mb-12 animate-fade-in">
+          <div className="inline-flex items-center gap-2 glass px-6 py-3 rounded-full shadow-lg mb-6 hover:scale-105 transition-transform">
+            <Sparkles className="w-5 h-5 text-white" />
+            <span className="font-semibold text-white">Interactive Learning Platform</span>
           </div>
-          <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-3 tracking-tight">
+          <h1 className="text-5xl sm:text-6xl font-extrabold text-white mb-4 tracking-tight text-shadow-white">
             Polygon Practice
           </h1>
-          <p className="text-lg text-gray-700 font-medium">
-            Master polygon angles and diagonals with interactive practice problems
+          <p className="text-xl text-white/90 font-medium max-w-2xl mx-auto">
+            Master polygon angles and diagonals with interactive practice
           </p>
         </div>
 
-        {/* Practice Mode Cards */}
-        <div className="grid md:grid-cols-2 gap-6">
+        {/* Practice Mode Cards - Glassmorphism */}
+        <div className="grid md:grid-cols-2 gap-8 mb-12">
           {/* Angles Card */}
           <Link
             to="/angles"
-            className="block bg-white/90 backdrop-blur-sm rounded-2xl shadow-soft-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group hover:-translate-y-2 border border-white/50"
+            className="block group animate-slide-up"
           >
-            <div className="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 p-5 relative overflow-hidden">
-              <div className="absolute inset-0 bg-white/10 transform -skew-y-6 group-hover:skew-y-0 transition-transform duration-500"></div>
-              <div className="flex items-center justify-between relative z-10">
-                <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-                  <Shapes className="w-7 h-7" />
-                  Angle Practice
-                </h2>
-                <div className="bg-white/20 backdrop-blur-sm p-2 rounded-lg group-hover:rotate-12 transition-transform">
-                  <BookOpen className="w-6 h-6 text-white" />
+            <div className="glass-card rounded-3xl overflow-hidden hover:scale-105 transition-all duration-500 hover:shadow-2xl">
+              {/* Gradient Header */}
+              <div className="relative p-8 bg-gradient-to-br from-blue-500/80 via-indigo-500/80 to-purple-600/80 backdrop-blur-xl">
+                <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:rotate-12 group-hover:scale-110 transition-all duration-300">
+                      <Shapes className="w-8 h-8 text-white" />
+                    </div>
+                    <ArrowRight className="w-6 h-6 text-white/60 group-hover:text-white group-hover:translate-x-2 transition-all" />
+                  </div>
+                  <h2 className="text-3xl font-bold text-white mb-2">
+                    Angle Practice
+                  </h2>
+                  <p className="text-white/80 text-sm">
+                    Interior, exterior, and algebraic angles
+                  </p>
                 </div>
               </div>
-            </div>
-            <div className="p-5">
-              <p className="text-gray-700 mb-4 font-medium">
-                Practice calculating interior angles, exterior angles, and solving algebra problems with polygons.
-              </p>
-              <ul className="space-y-2 text-sm text-gray-600 mb-5">
-                <li className="flex items-start">
-                  <div className="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center mr-2 mt-0.5 flex-shrink-0">
-                    <span className="text-blue-600 text-xs">✓</span>
+              
+              {/* Content */}
+              <div className="p-8">
+                <p className="text-gray-700 mb-6 leading-relaxed">
+                  Practice calculating interior angles, exterior angles, and solving algebra problems with polygons.
+                </p>
+                <ul className="space-y-3 mb-8">
+                  <li className="flex items-center gap-3 text-gray-700">
+                    <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center flex-shrink-0">
+                      <span className="text-white text-xs font-bold">✓</span>
+                    </div>
+                    <span className="text-sm">Sum of interior/exterior angles</span>
+                  </li>
+                  <li className="flex items-center gap-3 text-gray-700">
+                    <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center flex-shrink-0">
+                      <span className="text-white text-xs font-bold">✓</span>
+                    </div>
+                    <span className="text-sm">Finding sides from angle measurements</span>
+                  </li>
+                  <li className="flex items-center gap-3 text-gray-700">
+                    <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center flex-shrink-0">
+                      <span className="text-white text-xs font-bold">✓</span>
+                    </div>
+                    <span className="text-sm">Algebraic angle problems</span>
+                  </li>
+                  <li className="flex items-center gap-3 text-gray-700">
+                    <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center flex-shrink-0">
+                      <span className="text-white text-xs font-bold">✓</span>
+                    </div>
+                    <span className="text-sm">10-question challenge mode</span>
+                  </li>
+                </ul>
+                <div className="glass p-4 rounded-2xl group-hover:bg-white/30 transition-all duration-300">
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-indigo-900">Start Practicing</span>
+                    <BookOpen className="w-5 h-5 text-indigo-600 group-hover:scale-110 transition-transform" />
                   </div>
-                  Sum of interior/exterior angles
-                </li>
-                <li className="flex items-start">
-                  <div className="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center mr-2 mt-0.5 flex-shrink-0">
-                    <span className="text-blue-600 text-xs">✓</span>
-                  </div>
-                  Finding sides from angle measurements
-                </li>
-                <li className="flex items-start">
-                  <div className="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center mr-2 mt-0.5 flex-shrink-0">
-                    <span className="text-blue-600 text-xs">✓</span>
-                  </div>
-                  Algebraic angle problems
-                </li>
-                <li className="flex items-start">
-                  <div className="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center mr-2 mt-0.5 flex-shrink-0">
-                    <span className="text-blue-600 text-xs">✓</span>
-                  </div>
-                  10-question challenge mode
-                </li>
-              </ul>
-              <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg group-hover:from-blue-100 group-hover:to-indigo-100 transition-colors">
-                <span className="font-bold text-blue-700">Start Practicing</span>
-                <div className="flex items-center gap-1 text-blue-600">
-                  <span className="text-sm font-semibold">Go</span>
-                  <BookOpen className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
             </div>
@@ -90,89 +94,99 @@ export function Home() {
           {/* Diagonals Card */}
           <Link
             to="/diagonals"
-            className="block bg-white/90 backdrop-blur-sm rounded-2xl shadow-soft-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group hover:-translate-y-2 border border-white/50"
+            className="block group animate-slide-up"
+            style={{ animationDelay: '0.1s' }}
           >
-            <div className="bg-gradient-to-br from-purple-600 via-purple-700 to-pink-800 p-5 relative overflow-hidden">
-              <div className="absolute inset-0 bg-white/10 transform -skew-y-6 group-hover:skew-y-0 transition-transform duration-500"></div>
-              <div className="flex items-center justify-between relative z-10">
-                <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-                  <Target className="w-7 h-7" />
-                  Diagonal Practice
-                </h2>
-                <div className="bg-white/20 backdrop-blur-sm p-2 rounded-lg group-hover:rotate-12 transition-transform">
-                  <BookOpen className="w-6 h-6 text-white" />
+            <div className="glass-card rounded-3xl overflow-hidden hover:scale-105 transition-all duration-500 hover:shadow-2xl">
+              {/* Gradient Header */}
+              <div className="relative p-8 bg-gradient-to-br from-purple-500/80 via-pink-500/80 to-rose-600/80 backdrop-blur-xl">
+                <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:rotate-12 group-hover:scale-110 transition-all duration-300">
+                      <Target className="w-8 h-8 text-white" />
+                    </div>
+                    <ArrowRight className="w-6 h-6 text-white/60 group-hover:text-white group-hover:translate-x-2 transition-all" />
+                  </div>
+                  <h2 className="text-3xl font-bold text-white mb-2">
+                    Diagonal Practice
+                  </h2>
+                  <p className="text-white/80 text-sm">
+                    Total diagonals and vertex calculations
+                  </p>
                 </div>
               </div>
-            </div>
-            <div className="p-5">
-              <p className="text-gray-700 mb-4 font-medium">
-                Learn about polygon diagonals, including total diagonals and diagonals from a vertex.
-              </p>
-              <ul className="space-y-2 text-sm text-gray-600 mb-5">
-                <li className="flex items-start">
-                  <div className="w-5 h-5 rounded-full bg-purple-100 flex items-center justify-center mr-2 mt-0.5 flex-shrink-0">
-                    <span className="text-purple-600 text-xs">✓</span>
+              
+              {/* Content */}
+              <div className="p-8">
+                <p className="text-gray-700 mb-6 leading-relaxed">
+                  Learn about polygon diagonals, including total diagonals and diagonals from a vertex.
+                </p>
+                <ul className="space-y-3 mb-8">
+                  <li className="flex items-center gap-3 text-gray-700">
+                    <div className="w-6 h-6 rounded-full bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center flex-shrink-0">
+                      <span className="text-white text-xs font-bold">✓</span>
+                    </div>
+                    <span className="text-sm">Calculate total diagonals</span>
+                  </li>
+                  <li className="flex items-center gap-3 text-gray-700">
+                    <div className="w-6 h-6 rounded-full bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center flex-shrink-0">
+                      <span className="text-white text-xs font-bold">✓</span>
+                    </div>
+                    <span className="text-sm">Diagonals from a single vertex</span>
+                  </li>
+                  <li className="flex items-center gap-3 text-gray-700">
+                    <div className="w-6 h-6 rounded-full bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center flex-shrink-0">
+                      <span className="text-white text-xs font-bold">✓</span>
+                    </div>
+                    <span className="text-sm">Finding sides from diagonal count</span>
+                  </li>
+                  <li className="flex items-center gap-3 text-gray-700">
+                    <div className="w-6 h-6 rounded-full bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center flex-shrink-0">
+                      <span className="text-white text-xs font-bold">✓</span>
+                    </div>
+                    <span className="text-sm">Multi-step diagonal problems</span>
+                  </li>
+                </ul>
+                <div className="glass p-4 rounded-2xl group-hover:bg-white/30 transition-all duration-300">
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-pink-900">Start Practicing</span>
+                    <BookOpen className="w-5 h-5 text-pink-600 group-hover:scale-110 transition-transform" />
                   </div>
-                  Calculate total diagonals
-                </li>
-                <li className="flex items-start">
-                  <div className="w-5 h-5 rounded-full bg-purple-100 flex items-center justify-center mr-2 mt-0.5 flex-shrink-0">
-                    <span className="text-purple-600 text-xs">✓</span>
-                  </div>
-                  Diagonals from a single vertex
-                </li>
-                <li className="flex items-start">
-                  <div className="w-5 h-5 rounded-full bg-purple-100 flex items-center justify-center mr-2 mt-0.5 flex-shrink-0">
-                    <span className="text-purple-600 text-xs">✓</span>
-                  </div>
-                  Finding sides from diagonal count
-                </li>
-                <li className="flex items-start">
-                  <div className="w-5 h-5 rounded-full bg-purple-100 flex items-center justify-center mr-2 mt-0.5 flex-shrink-0">
-                    <span className="text-purple-600 text-xs">✓</span>
-                  </div>
-                  Multi-step diagonal problems
-                </li>
-              </ul>
-              <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg group-hover:from-purple-100 group-hover:to-pink-100 transition-colors">
-                <span className="font-bold text-purple-700">Start Practicing</span>
-                <div className="flex items-center gap-1 text-purple-600">
-                  <span className="text-sm font-semibold">Go</span>
-                  <BookOpen className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
             </div>
           </Link>
         </div>
 
-        {/* Features Section */}
-        <div className="mt-8 bg-white/90 backdrop-blur-sm rounded-2xl shadow-soft-lg p-6 border border-white/50">
-          <h3 className="text-xl font-bold text-gray-900 mb-5 text-center">Why Choose Polygon Practice?</h3>
-          <div className="grid sm:grid-cols-3 gap-6">
+        {/* Features Section - Glass Card */}
+        <div className="glass-card rounded-3xl p-8 sm:p-10 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+          <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Why Choose Polygon Practice?</h3>
+          <div className="grid sm:grid-cols-3 gap-8">
             <div className="text-center group cursor-default">
-              <div className="w-14 h-14 mx-auto mb-3 bg-gradient-to-br from-primary-100 to-primary-200 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm">
-                <TrendingUp className="w-7 h-7 text-primary-600" />
+              <div className="w-20 h-20 mx-auto mb-4 rounded-3xl bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
+                <TrendingUp className="w-10 h-10 text-white" />
               </div>
-              <h4 className="font-bold text-gray-900 mb-1">Track Progress</h4>
-              <p className="text-xs text-gray-600 leading-relaxed">
+              <h4 className="font-bold text-gray-900 mb-2 text-lg">Track Progress</h4>
+              <p className="text-sm text-gray-600 leading-relaxed">
                 Monitor your correct and incorrect answers in real-time
               </p>
             </div>
             <div className="text-center group cursor-default">
-              <div className="w-14 h-14 mx-auto mb-3 bg-gradient-to-br from-success-100 to-success-200 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm">
-                <Lightbulb className="w-7 h-7 text-success-600" />
+              <div className="w-20 h-20 mx-auto mb-4 rounded-3xl bg-gradient-to-br from-emerald-400 to-green-500 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
+                <Lightbulb className="w-10 h-10 text-white" />
               </div>
-              <h4 className="font-bold text-gray-900 mb-1">Step-by-Step Solutions</h4>
-              <p className="text-xs text-gray-600 leading-relaxed">
+              <h4 className="font-bold text-gray-900 mb-2 text-lg">Step-by-Step Solutions</h4>
+              <p className="text-sm text-gray-600 leading-relaxed">
                 Learn from detailed explanations when you get stuck
               </p>
             </div>
             <div className="text-center group cursor-default">
-              <div className="w-14 h-14 mx-auto mb-3 bg-gradient-to-br from-warning-100 to-warning-200 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm">
-                <Trophy className="w-7 h-7 text-warning-600" />
+              <div className="w-20 h-20 mx-auto mb-4 rounded-3xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
+                <Trophy className="w-10 h-10 text-white" />
               </div>
-              <h4 className="font-bold text-gray-900 mb-1">Challenge Mode</h4>
-              <p className="text-xs text-gray-600 leading-relaxed">
+              <h4 className="font-bold text-gray-900 mb-2 text-lg">Challenge Mode</h4>
+              <p className="text-sm text-gray-600 leading-relaxed">
                 Test yourself with 10-question challenges
               </p>
             </div>
