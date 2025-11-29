@@ -120,7 +120,11 @@ export function AnglesPage() {
 
   const handleContinue = () => {
     setShowSolution(false);
-    checkChallengeProgress(false);
+    if (mode === 'practice') {
+      generateNewProblem();
+    } else {
+      checkChallengeProgress(false);
+    }
   };
 
   const checkChallengeProgress = (wasCorrect) => {
@@ -513,7 +517,7 @@ export function AnglesPage() {
 
               {/* Solution Modal */}
               <SolutionModal
-                isOpen={showSolution && currentProblem}
+                isOpen={showSolution && !!currentProblem}
                 solution={currentProblem?.solution || ''}
                 onContinue={handleContinue}
               />

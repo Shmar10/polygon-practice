@@ -189,7 +189,11 @@ export function DiagonalsPage() {
 
   const handleContinue = () => {
     setShowSolution(false);
-    checkProgress(false);
+    if (mode === 'practice') {
+      generateNewProblem();
+    } else {
+      checkProgress(false);
+    }
   };
 
   const startSession = (selectedMode) => {
