@@ -46,7 +46,9 @@ npx gh-pages -d dist
 
 ## 🖥️ Option 2: Synology NAS (Self-Hosted)
 
-### Method A: Web Station (Simple)
+### Method A: Web Station (Simple - Recommended)
+
+**Important:** This method requires rebuilding the app with the correct base path for root deployment.
 
 1. **Enable Web Station:**
    - Open Package Center on your Synology
@@ -59,19 +61,38 @@ npx gh-pages -d dist
    - Set up your hostname (e.g., `polygon.local`)
    - Choose a document root (e.g., `/web/polygon-practice`)
 
-3. **Build the app:**
+3. **Build the app for Synology (Root deployment):**
    ```bash
+   cd polygon-practice-app
    npm run build
    ```
+   
+   **Note:** The build command automatically uses base path `/` (not `/polygon-practice/`), which is correct for root deployment on Synology.
 
-4. **Upload files:**
-   - Copy all files from the `dist` folder to your Synology
-   - Use File Station or FTP/SFTP
+4. **Verify the build:**
+   - Check that `dist/index.html` references assets with paths starting with `/` (not `/polygon-practice/`)
+   - The `.htaccess` file should be automatically included in the `dist` folder (copied from `public/`)
+
+5. **Upload files:**
+   - Copy **all files and folders** from the `dist` folder to your Synology
+   - Use File Station, FTP, or SFTP
    - Place them in `/web/polygon-practice` (or your chosen directory)
+   - **Important:** Make sure the `.htaccess` file is uploaded (it may be hidden by default)
 
-5. **Access your app:**
+6. **Enable mod_rewrite in Web Station (if needed):**
+   - Go to Web Station → PHP Settings
+   - Ensure Apache HTTP Server is selected
+   - The `.htaccess` file will automatically handle client-side routing
+
+7. **Access your app:**
    - Navigate to `http://YOUR_NAS_IP/polygon-practice`
    - Or `http://polygon.local` if you set up a virtual host
+   - Direct links like `http://YOUR_NAS_IP/polygon-practice/angles` should work correctly
+
+**What's included for routing:**
+- The `.htaccess` file in `public/` is automatically copied to `dist/` during build
+- This file handles client-side routing so all routes redirect to `index.html`
+- No additional configuration needed if using Apache (default in Web Station)
 
 ### Method B: Docker + Nginx (Advanced)
 
@@ -79,12 +100,14 @@ npx gh-pages -d dist
    ```dockerfile
    FROM nginx:alpine
    COPY dist /usr/share/nginx/html
+   COPY nginx-synology.conf /etc/nginx/conf.d/default.conf
    EXPOSE 80
    CMD ["nginx", "-g", "daemon off;"]
    ```
 
 2. **Build and deploy:**
    ```bash
+   cd polygon-practice-app
    # Build the app
    npm run build
    
@@ -97,6 +120,11 @@ npx gh-pages -d dist
 
 3. **Access your app:**
    - Navigate to `http://YOUR_NAS_IP:8080`
+   - All routes will work correctly thanks to the nginx configuration
+
+**Alternative: Use Nginx directly in Web Station**
+- See `nginx-synology.conf` in the project root for configuration example
+- Copy the configuration to your Nginx setup on Synology
 
 ---
 
@@ -200,8 +228,12 @@ If you need to configure the Google Sheets integration:
 - Or add a `404.html` file that redirects to `index.html`
 
 ### Routing doesn't work on Synology
-- Configure Web Station to redirect all routes to `index.html`
-- Or use HashRouter instead of BrowserRouter in `App.jsx`
+- **Check that `.htaccess` file is in your `dist` folder** - It's automatically included from `public/`
+- Verify `.htaccess` was uploaded to Synology (it may be hidden - enable "Show hidden files" in File Station)
+- Ensure Apache HTTP Server is selected in Web Station (not Nginx)
+- If using Nginx, see `nginx-synology.conf` example file in the project root
+- Verify mod_rewrite is enabled in your Apache configuration
+- Try accessing routes directly: `http://YOUR_NAS_IP/polygon-practice/angles` should work
 
 ### Tailwind styles not loading
 - Make sure you ran `npm install`

@@ -15,7 +15,7 @@ export function Home() {
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Academic Header */}
         <div className="text-center mb-1.5 animate-fade-in">
-          <div className="academic-card-raised rounded-lg p-6 max-w-4xl mx-auto border-t-4 border-t-slate-600">
+          <div className="academic-card-raised rounded-lg p-6 mx-auto border-t-4 border-t-slate-600">
             <p className="text-xl text-gray-800 font-semibold mb-2">
               Master polygon angles and diagonals with interactive practice
             </p>
